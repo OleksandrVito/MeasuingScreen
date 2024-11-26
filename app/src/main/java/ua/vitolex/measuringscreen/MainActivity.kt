@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -50,6 +51,7 @@ import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -62,6 +64,7 @@ class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MobileAds.initialize(this)
         setContent {
             val scale = this.resources.displayMetrics.density
 
@@ -141,375 +144,392 @@ class MainActivity : ComponentActivity() {
                         .fillMaxWidth(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Canvas(
-                        modifier = Modifier
-                            .fillMaxHeight()
-                            .fillMaxWidth()
-                            .padding(20.dp),
-                    ) {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-                        drawLine(
-                            start = Offset(x = 0f, y = -20f),
-                            end = Offset(x = 0f, y = canvasHeight),
-                            color = Color.Gray,
-                            strokeWidth = 2f,
-                            alpha = 0.2f
-                        )
-                        for (i in 0..(canvasWidth / ydpi * koef).toInt() * 2 + 1) {
-                            drawLine(
-                                start = Offset(x = i * ydpi / koef / 2, y = -20f),
-                                end = Offset(x = i * ydpi / koef / 2, y = canvasHeight),
-                                color = Color.Gray,
-                                strokeWidth = 2f,
-                                alpha = 0.2f
-                            )
-                        }
-
-                        drawLine(
-                            start = Offset(x = -20f, y = 0f),
-                            end = Offset(x = canvasWidth, y = 0f),
-                            color = Color.Gray,
-                            strokeWidth = 2f,
-                            alpha = 0.2f
-                        )
-
-                        for (i in 0..(canvasHeight / ydpi * koef).toInt() * 2 + 1) {
-                            drawLine(
-                                start = Offset(
-                                    x = -20f,
-                                    y = i * ydpi / koef.toFloat() / 2.toFloat()
-                                ),
-                                end = Offset(
-                                    x = canvasWidth,
-                                    y = i * ydpi / koef.toFloat() / 2.toFloat()
-                                ),
-                                color = Color.Gray,
-                                strokeWidth = 2f,
-                                alpha = 0.2f
-                            )
-                        }
-
-                    }
-                    Column(Modifier.padding(20.dp)) {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .weight(1f),
-                            Arrangement.SpaceBetween
+                    Column {
+                        Box(
+                            modifier = Modifier.heightIn(min = 60.dp),
+                            contentAlignment = Alignment.Center
                         ) {
-                            Canvas(modifier = Modifier.fillMaxHeight()) {
-
-                                drawCircle(
-                                    color = Color.Yellow,
-                                    radius = radius,
-                                    center = Offset(x = radius, y = radius),
-//                                    style = Stroke(width = 8f)
-                                )
-                                drawArc(
-                                    color = Color.LightGray,
-                                    startAngle = -180f,
-                                    sweepAngle = -(360f - angle),
-                                    useCenter = true,
-//                                    style = Stroke(35f),
-                                    size = Size(radius * 2, radius * 2),
-//                                    topLeft = Offset(x = 0, y = radius)
-                                )
-                                drawCircle(
-                                    color = Color.Red,
-                                    radius = radius,
-                                    center = Offset(x = radius, y = radius),
-                                    style = Stroke(width = 8f)
-                                )
-                                drawCircle(
-                                    color = Color.Black,
-                                    radius = radius,
-                                    center = Offset(x = radius, y = radius),
-                                    style = Stroke(width = 2f)
-                                )
+//                            BannerAdView(id = "ca-app-pub-3940256099942544/9214589741")
+                        BannerAdView(id = "ca-app-pub-1869740172940843/7635799124")
+                        }
+                        Box ( contentAlignment = Alignment.BottomStart){
+                            Canvas(
+                                modifier = Modifier
+                                    .fillMaxHeight()
+                                    .fillMaxWidth()
+                                    .padding(20.dp),
+                            ) {
+                                val canvasWidth = size.width
+                                val canvasHeight = size.height
                                 drawLine(
-                                    start = Offset(x = radius, y = radius),
-                                    end = Offset(x = 0f, y = radius),
-                                    color = Color.Red,
-                                    strokeWidth = 8f
+                                    start = Offset(x = 0f, y = -20f),
+                                    end = Offset(x = 0f, y = canvasHeight),
+                                    color = Color.Gray,
+                                    strokeWidth = 2f,
+                                    alpha = 0.2f
                                 )
-                                drawLine(
-                                    start = Offset(x = radius, y = radius),
-                                    end = Offset(x = 0f, y = radius),
-                                    color = Color.Black,
-                                    strokeWidth = 2f
-                                )
-                                drawCircle(
-                                    color = Color.Black,
-                                    radius = 5f,
-                                    center = Offset(x = radius, y = radius),
-                                )
-                                drawCircle(
-                                    color = Color.Black,
-                                    radius = 5f,
-                                    center = Offset(x = 0f, y = radius),
-                                )
-                            }
-
-                            Box(modifier = Modifier.fillMaxHeight()) {
-                                val textMeasurer = rememberTextMeasurer()
-                                Canvas(modifier = Modifier.fillMaxHeight()) {
-                                    val canvasHeight = size.height
-                                    drawRect(
-                                        color = Color.LightGray.copy(0.2f),
-                                        topLeft = Offset(-210f, 0f),
-                                        size = Size(200f, canvasHeight)
+                                for (i in 0..(canvasWidth / ydpi * koef).toInt() * 2 + 1) {
+                                    drawLine(
+                                        start = Offset(x = i * ydpi / koef / 2, y = -20f),
+                                        end = Offset(x = i * ydpi / koef / 2, y = canvasHeight),
+                                        color = Color.Gray,
+                                        strokeWidth = 2f,
+                                        alpha = 0.2f
                                     )
-                                    for (i in 0..canvasHeight.toInt()) {
-                                        val y = (i * ydpi / koef / 10.toFloat()).toFloat()
-                                        var offsetY = 0
-                                        if (y < canvasHeight.toInt()) offsetY =
-                                            (i * ydpi / koef / 10.toFloat()).toFloat()
-                                                .toInt() else offsetY = 0
+                                }
+
+                                drawLine(
+                                    start = Offset(x = -20f, y = 0f),
+                                    end = Offset(x = canvasWidth, y = 0f),
+                                    color = Color.Gray,
+                                    strokeWidth = 2f,
+                                    alpha = 0.2f
+                                )
+
+                                for (i in 0..(canvasHeight / ydpi * koef).toInt() * 2 + 1) {
+                                    drawLine(
+                                        start = Offset(
+                                            x = -20f,
+                                            y = i * ydpi / koef.toFloat() / 2.toFloat()
+                                        ),
+                                        end = Offset(
+                                            x = canvasWidth,
+                                            y = i * ydpi / koef.toFloat() / 2.toFloat()
+                                        ),
+                                        color = Color.Gray,
+                                        strokeWidth = 2f,
+                                        alpha = 0.2f
+                                    )
+                                }
+
+                            }
+                            Column(Modifier.padding(20.dp)) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .weight(1f),
+                                    Arrangement.SpaceBetween
+                                ) {
+                                    Canvas(modifier = Modifier.fillMaxHeight()) {
+
+                                        drawCircle(
+                                            color = Color.Yellow,
+                                            radius = radius,
+                                            center = Offset(x = radius, y = radius),
+//                                    style = Stroke(width = 8f)
+                                        )
+                                        drawArc(
+                                            color = Color.LightGray,
+                                            startAngle = -180f,
+                                            sweepAngle = -(360f - angle),
+                                            useCenter = true,
+//                                    style = Stroke(35f),
+                                            size = Size(radius * 2, radius * 2),
+//                                    topLeft = Offset(x = 0, y = radius)
+                                        )
                                         drawCircle(
                                             color = Color.Red,
-                                            radius = (ydpi / koef / 50).toFloat(),
-                                            center = Offset(
-                                                x = -8f,
-                                                y = offsetY.toFloat(),
-                                            )
+                                            radius = radius,
+                                            center = Offset(x = radius, y = radius),
+                                            style = Stroke(width = 8f)
                                         )
-                                    }
-                                    for (i in 0..canvasHeight.toInt()) {
-                                        val y = i * ydpi / koef / 2.toFloat()
-                                        var offsetY = 0
-                                        if (y < canvasHeight.toInt()) offsetY =
-                                            (i * ydpi / koef / 2.toFloat()).toFloat()
-                                                .toInt() else offsetY = 0
                                         drawCircle(
                                             color = Color.Black,
-                                            radius = (ydpi / koef / 20).toFloat(),
-                                            center = Offset(
-                                                x = -8f,
-                                                y = offsetY.toFloat()
-                                            ),
+                                            radius = radius,
+                                            center = Offset(x = radius, y = radius),
+                                            style = Stroke(width = 2f)
                                         )
-
                                         drawLine(
-                                            start = Offset(
-                                                x = -8f,
-                                                y = offsetY.toFloat()
-                                            ),
-                                            end = Offset(
-                                                x = -38f,
-                                                y = offsetY.toFloat()
-                                            ),
+                                            start = Offset(x = radius, y = radius),
+                                            end = Offset(x = 0f, y = radius),
                                             color = Color.Red,
+                                            strokeWidth = 8f
+                                        )
+                                        drawLine(
+                                            start = Offset(x = radius, y = radius),
+                                            end = Offset(x = 0f, y = radius),
+                                            color = Color.Black,
                                             strokeWidth = 2f
+                                        )
+                                        drawCircle(
+                                            color = Color.Black,
+                                            radius = 5f,
+                                            center = Offset(x = radius, y = radius),
+                                        )
+                                        drawCircle(
+                                            color = Color.Black,
+                                            radius = 5f,
+                                            center = Offset(x = 0f, y = radius),
                                         )
                                     }
 
-                                    for (i in 0..canvasHeight.toInt()) {
-                                        val y = i * ydpi / koef
-                                        var offsetY = 0
-                                        if (y < canvasHeight.toInt()) offsetY =
-                                            (i * ydpi / koef).toFloat()
-                                                .toInt() else offsetY = 0
-                                        drawLine(
-                                            start = Offset(
-                                                x = -8f,
-                                                y = offsetY.toFloat()
-                                            ),
-                                            end = Offset(
-                                                x = -48f,
-                                                y = offsetY.toFloat()
-                                            ),
-                                            color = Color.Red,
-                                            strokeWidth = 2f
-                                        )
-                                    }
-                                    for (i in 0..(canvasHeight / ydpi * koef).toInt()) {
-                                        rotate(
-                                            degrees = -90f,
-                                            Offset(
-                                                x = -84f,
-                                                y = (i * ydpi / koef.toFloat() + 10f).toFloat()
+                                    Box(modifier = Modifier.fillMaxHeight()) {
+                                        val textMeasurer = rememberTextMeasurer()
+                                        Canvas(modifier = Modifier.fillMaxHeight()) {
+                                            val canvasHeight = size.height
+                                            drawRect(
+                                                color = Color.LightGray.copy(0.2f),
+                                                topLeft = Offset(-210f, 0f),
+                                                size = Size(200f, canvasHeight)
                                             )
-                                        ) {
-                                            drawText(
-                                                textMeasurer = textMeasurer,
-                                                text = "${i}",
-                                                style = TextStyle(
-                                                    fontSize = 15.sp,
-                                                    color = Color.Black,
-//                                                    background = Color.Red.copy(alpha = 0.2f)
-                                                ),
-                                                topLeft =
-                                                Offset(
-                                                    x = -88f,
-                                                    y = i * ydpi / koef.toFloat() - 23f
+                                            for (i in 0..canvasHeight.toInt()) {
+                                                val y = (i * ydpi / koef / 10.toFloat()).toFloat()
+                                                var offsetY = 0
+                                                if (y < canvasHeight.toInt()) offsetY =
+                                                    (i * ydpi / koef / 10.toFloat()).toFloat()
+                                                        .toInt() else offsetY = 0
+                                                drawCircle(
+                                                    color = Color.Red,
+                                                    radius = (ydpi / koef / 50).toFloat(),
+                                                    center = Offset(
+                                                        x = -8f,
+                                                        y = offsetY.toFloat(),
+                                                    )
                                                 )
-                                            )
+                                            }
+                                            for (i in 0..canvasHeight.toInt()) {
+                                                val y = i * ydpi / koef / 2.toFloat()
+                                                var offsetY = 0
+                                                if (y < canvasHeight.toInt()) offsetY =
+                                                    (i * ydpi / koef / 2.toFloat()).toFloat()
+                                                        .toInt() else offsetY = 0
+                                                drawCircle(
+                                                    color = Color.Black,
+                                                    radius = (ydpi / koef / 20).toFloat(),
+                                                    center = Offset(
+                                                        x = -8f,
+                                                        y = offsetY.toFloat()
+                                                    ),
+                                                )
+
+                                                drawLine(
+                                                    start = Offset(
+                                                        x = -8f,
+                                                        y = offsetY.toFloat()
+                                                    ),
+                                                    end = Offset(
+                                                        x = -38f,
+                                                        y = offsetY.toFloat()
+                                                    ),
+                                                    color = Color.Red,
+                                                    strokeWidth = 2f
+                                                )
+                                            }
+
+                                            for (i in 0..canvasHeight.toInt()) {
+                                                val y = i * ydpi / koef
+                                                var offsetY = 0
+                                                if (y < canvasHeight.toInt()) offsetY =
+                                                    (i * ydpi / koef).toFloat()
+                                                        .toInt() else offsetY = 0
+                                                drawLine(
+                                                    start = Offset(
+                                                        x = -8f,
+                                                        y = offsetY.toFloat()
+                                                    ),
+                                                    end = Offset(
+                                                        x = -48f,
+                                                        y = offsetY.toFloat()
+                                                    ),
+                                                    color = Color.Red,
+                                                    strokeWidth = 2f
+                                                )
+                                            }
+                                            for (i in 0..(canvasHeight / ydpi * koef).toInt()) {
+                                                rotate(
+                                                    degrees = -90f,
+                                                    Offset(
+                                                        x = -84f,
+                                                        y = (i * ydpi / koef.toFloat() + 10f).toFloat()
+                                                    )
+                                                ) {
+                                                    drawText(
+                                                        textMeasurer = textMeasurer,
+                                                        text = "${i}",
+                                                        style = TextStyle(
+                                                            fontSize = 15.sp,
+                                                            color = Color.Black,
+//                                                    background = Color.Red.copy(alpha = 0.2f)
+                                                        ),
+                                                        topLeft =
+                                                        Offset(
+                                                            x = -88f,
+                                                            y = i * ydpi / koef.toFloat() - 23f
+                                                        )
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                    }
-
-                    Box(
-                        modifier = Modifier
-                            .height(100.dp)
-                            .width(100.dp)
-                            .padding(20.dp),
-                        contentAlignment = Alignment.BottomStart
-                    ) {
-                        Column {
-                            if (geometricFigure == "circle") {
-                                Text(
-                                    text = "Radius = ${
-                                        kotlin.math.round(
-                                            text * 100
-                                        ) / 100
-                                    }", fontSize = 14.sp
-                                )
-                                Text(
-                                    text = "Circumference = ${kotlin.math.round(text * 2 * java.lang.Math.PI * 100) / 100}",
-                                    fontSize = 14.sp
-                                )
-                                Text(
-                                    text = "Area = ${kotlin.math.round(text * text * java.lang.Math.PI * 100) / 100}",
-                                    fontSize = 14.sp
-                                )
-                            } else {
-                                Text(
-                                    text = "Angular measure = ${angle.toInt()}°",
-                                    fontSize = 14.sp
-                                )
-                            }
+                            Box(
+                                modifier = Modifier
+//                                    .height(100.dp)
+//                                    .width(100.dp)
+                                    .padding(20.dp),
+                                contentAlignment = Alignment.BottomStart
+                            ) {
+                                Column {
+                                    if (geometricFigure == "circle") {
+                                        Text(
+                                            text = "Radius = ${
+                                                kotlin.math.round(
+                                                    text * 100
+                                                ) / 100
+                                            }", fontSize = 14.sp
+                                        )
+                                        Text(
+                                            text = "Circumference = ${kotlin.math.round(text * 2 * java.lang.Math.PI * 100) / 100}",
+                                            fontSize = 14.sp
+                                        )
+                                        Text(
+                                            text = "Area = ${kotlin.math.round(text * text * java.lang.Math.PI * 100) / 100}",
+                                            fontSize = 14.sp
+                                        )
+                                    } else {
+                                        Text(
+                                            text = "Angular measure = ${angle.toInt()}°",
+                                            fontSize = 14.sp
+                                        )
+                                    }
 
 
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Column {
-                                Text(text = "Units of measurement:", fontSize = 14.sp)
+                                    Spacer(modifier = Modifier.height(20.dp))
+                                    Column {
+                                        Text(text = "Units of measurement:", fontSize = 14.sp)
 
-                                MultiToggleButton(
-                                    unitsOfMeasurement,
-                                    listOf("cm", "in"),
-                                    {
-                                        if (unitsOfMeasurement == "cm") {
-                                            unitsOfMeasurement = "in"; koef = 1f;
-                                            radius = ydpi / koef
-                                        } else {
-                                            unitsOfMeasurement = "cm"; koef = 2.54f;
-                                            radius = ydpi / koef
-                                        }
-                                    },
-                                    width = 40.dp
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Column {
-                                Text(text = "Geometric figure:", fontSize = 14.sp)
-                                MultiToggleButton(
-                                    currentSelection = geometricFigure,
-                                    toggleStates = listOf("circle", "angle"),
-                                    onToggleChange = {
-                                        if (geometricFigure == "circle") {
-                                            geometricFigure = "angle"
-                                        } else {
-                                            geometricFigure = "circle"
-                                        }
-                                    },
-                                    width = 100.dp
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(20.dp))
-                            Row {
-                                var isPressed = remember { mutableStateOf(false) }
-                                val scope = rememberCoroutineScope()
-
-                                CalcButtonComponent(
-                                    Modifier
-                                        .height(30.dp)
-                                        .width(60.dp)
-                                        .pointerInput(Unit) {
-                                            detectPressGestures(
-                                                onPressStart = {
-                                                    if (radius > 0.1 && geometricFigure == "circle") radius =
-                                                        radius - ydpi / koef / 100
-                                                    if (geometricFigure == "angle" && angle > 0) angle--
-                                                },
-                                                onLongPress = {
-                                                    isPressed.value = true
-                                                    scope.launch {
-                                                        try {
-                                                            // Цикл збільшення кута під час натискання
-                                                            while (isPressed.value) {
-                                                                if (geometricFigure == "angle" && angle > 0f)
-                                                                    angle--  // Збільшуємо кут
-                                                                if (radius > 0.1 && geometricFigure == "circle") radius =
-                                                                    radius - ydpi / koef / 100
-                                                                delay(100)  // Затримка між змінами
-                                                            }
-                                                        } finally {
-                                                            isPressed.value =
-                                                                false  // Коли натискання припиняється, зупиняємо цикл
-                                                        }
-                                                    }
-
-                                                },
-                                                onLongPressEnd = {
-                                                    isPressed.value = false
-                                                },
-                                                onPressEnd = {
-                                                    isPressed.value = false
+                                        MultiToggleButton(
+                                            unitsOfMeasurement,
+                                            listOf("cm", "in"),
+                                            {
+                                                if (unitsOfMeasurement == "cm") {
+                                                    unitsOfMeasurement = "in"; koef = 1f;
+                                                    radius = ydpi / koef
+                                                } else {
+                                                    unitsOfMeasurement = "cm"; koef = 2.54f;
+                                                    radius = ydpi / koef
                                                 }
-                                            )
-                                        },
-                                    color = Color.LightGray,
-                                    text = "-"
-                                )
-                                Spacer(modifier = Modifier.width(10.dp))
-
-                                CalcButtonComponent(
-                                    Modifier
-                                        .height(30.dp)
-                                        .width(60.dp)
-                                        .pointerInput(Unit) {
-                                            detectPressGestures(
-                                                onPressStart = {
-                                                    if (radius / ydpi * koef < round(screenWidth * 10) / 10 && geometricFigure == "circle")
-                                                        radius = radius + ydpi / koef / 100.toFloat()
-                                                    if (geometricFigure == "angle" && angle < 360f) angle++
-                                                },
-                                                onLongPress = {
-                                                    isPressed.value = true
-                                                    scope.launch {
-                                                        try {
-                                                            // Цикл збільшення кута під час натискання
-                                                            while (isPressed.value) {
-                                                                if (geometricFigure == "angle" && angle < 360f)
-                                                                    angle++  // Збільшуємо кут
-                                                                if (radius / ydpi * koef < round(screenWidth * 10) / 10 && geometricFigure == "circle") radius =
-                                                                    radius + ydpi / koef / 100
-                                                                delay(100)  // Затримка між змінами
-                                                            }
-                                                        } finally {
-                                                            isPressed.value =
-                                                                false  // Коли натискання припиняється, зупиняємо цикл
-                                                        }
-                                                    }
-
-                                                },
-                                                onLongPressEnd = {
-                                                    isPressed.value = false
-                                                },
-                                                onPressEnd = {
-                                                    isPressed.value = false
+                                            },
+                                            width = 40.dp
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(20.dp))
+                                    Column {
+                                        Text(text = "Geometric figure:", fontSize = 14.sp)
+                                        MultiToggleButton(
+                                            currentSelection = geometricFigure,
+                                            toggleStates = listOf("circle", "angle"),
+                                            onToggleChange = {
+                                                if (geometricFigure == "circle") {
+                                                    geometricFigure = "angle"
+                                                } else {
+                                                    geometricFigure = "circle"
                                                 }
-                                            )
-                                        },
-                                    color = Color.LightGray,
-                                    text = "+"
-                                )
+                                            },
+                                            width = 100.dp
+                                        )
+                                    }
+                                    Spacer(modifier = Modifier.height(20.dp))
+                                    Row {
+                                        var isPressed = remember { mutableStateOf(false) }
+                                        val scope = rememberCoroutineScope()
+
+                                        CalcButtonComponent(
+                                            Modifier
+                                                .height(30.dp)
+                                                .width(60.dp)
+                                                .pointerInput(Unit) {
+                                                    detectPressGestures(
+                                                        onPressStart = {
+                                                            if (radius > 0.1 && geometricFigure == "circle") radius =
+                                                                radius - ydpi / koef / 100
+                                                            if (geometricFigure == "angle" && angle > 0) angle--
+                                                        },
+                                                        onLongPress = {
+                                                            isPressed.value = true
+                                                            scope.launch {
+                                                                try {
+                                                                    // Цикл збільшення кута під час натискання
+                                                                    while (isPressed.value) {
+                                                                        if (geometricFigure == "angle" && angle > 0f)
+                                                                            angle--  // Збільшуємо кут
+                                                                        if (radius > 0.1 && geometricFigure == "circle") radius =
+                                                                            radius - ydpi / koef / 100
+                                                                        delay(100)  // Затримка між змінами
+                                                                    }
+                                                                } finally {
+                                                                    isPressed.value =
+                                                                        false  // Коли натискання припиняється, зупиняємо цикл
+                                                                }
+                                                            }
+
+                                                        },
+                                                        onLongPressEnd = {
+                                                            isPressed.value = false
+                                                        },
+                                                        onPressEnd = {
+                                                            isPressed.value = false
+                                                        }
+                                                    )
+                                                },
+                                            color = Color.LightGray,
+                                            text = "-"
+                                        )
+                                        Spacer(modifier = Modifier.width(10.dp))
+
+                                        CalcButtonComponent(
+                                            Modifier
+                                                .height(30.dp)
+                                                .width(60.dp)
+                                                .pointerInput(Unit) {
+                                                    detectPressGestures(
+                                                        onPressStart = {
+                                                            if (radius / ydpi * koef < round(screenWidth * 10) / 10 && geometricFigure == "circle")
+                                                                radius =
+                                                                    radius + ydpi / koef / 100.toFloat()
+                                                            if (geometricFigure == "angle" && angle < 360f) angle++
+                                                        },
+                                                        onLongPress = {
+                                                            isPressed.value = true
+                                                            scope.launch {
+                                                                try {
+                                                                    // Цикл збільшення кута під час натискання
+                                                                    while (isPressed.value) {
+                                                                        if (geometricFigure == "angle" && angle < 360f)
+                                                                            angle++  // Збільшуємо кут
+                                                                        if (radius / ydpi * koef < round(
+                                                                                screenWidth * 10
+                                                                            ) / 10 && geometricFigure == "circle"
+                                                                        ) radius =
+                                                                            radius + ydpi / koef / 100
+                                                                        delay(100)  // Затримка між змінами
+                                                                    }
+                                                                } finally {
+                                                                    isPressed.value =
+                                                                        false  // Коли натискання припиняється, зупиняємо цикл
+                                                                }
+                                                            }
+
+                                                        },
+                                                        onLongPressEnd = {
+                                                            isPressed.value = false
+                                                        },
+                                                        onPressEnd = {
+                                                            isPressed.value = false
+                                                        }
+                                                    )
+                                                },
+                                            color = Color.LightGray,
+                                            text = "+"
+                                        )
+                                    }
+                                }
                             }
                         }
+
+
+
                     }
                 }
             }
